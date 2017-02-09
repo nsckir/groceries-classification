@@ -62,19 +62,20 @@ class ImageNetDownloader:
         tar.close()
 
 
-    def mkWnidDir(self, wnid):
-        if not os.path.exists(self.data_path + wnid):
-            os.mkdir(self.data_path + wnid)
-        return os.path.abspath(self.data_path + wnid)
+    def mkWnidDir(self, wnid, desc):
+    	tt = self.data_path + desc + '_' + wnid
+        if not os.path.exists(tt):
+            os.mkdir(tt)
+        return os.path.abspath(tt)
 
-    def downloadOriginalImages(self, wnid, username, accesskey):
+    def downloadOriginalImages(self, wnid, username, accesskey, desc):
         download_url = 'http://www.image-net.org/download/synset?wnid=%s&username=%s&accesskey=%s&release=latest&src=stanford' % (wnid, username, accesskey)
         try:
-             download_file = self.download_file(download_url, self.mkWnidDir(wnid), wnid + '_original_images.tar')
+             download_file = self.download_file(download_url, self.mkWnidDir(wnid, desc), wnid + '_original_images.tar')
         except Exception, erro:
             print 'Fail to download : ' + download_url
         currentDir = os.getcwd()
-        extracted_folder = os.path.join(self.data_path, wnid)
+        extracted_folder = self.mkWnidDir(wnid, desc)
         if not os.path.exists(extracted_folder):
             os.mkdir(extracted_folder)
         extracted_folder = os.path.join(extracted_folder, wnid + '_original_images')
