@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
-import click
 import logging
 from dotenv import find_dotenv, load_dotenv
+import sys
+
+sys.path.insert(0, '~/mxnet/tools/im2rec.py')
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
+python ~/mxnet/tools/im2rec.py --list True --recursive True --train-ratio 0.95 178_scoodit_cats ../raw/
+python ~/mxnet/tools/im2rec.py --resize 480 --quality 95 --num-thread 16 178_scoodit_cats ../raw/
+
 def main(input_filepath, output_filepath):
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
@@ -26,5 +28,7 @@ if __name__ == '__main__':
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
     load_dotenv(find_dotenv())
+
+
 
     main()

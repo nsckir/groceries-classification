@@ -9,7 +9,7 @@ if sys.version_info >= (3,):
 else:
     import urllib2
     import urlparse
-    import urllib
+
 
 class ImageNetDownloader:
     def __init__(self, data_path='../data/raw/'):
@@ -24,7 +24,7 @@ class ImageNetDownloader:
         if not filename:
             filename = 'downloaded.file'
 
-        if not renamed_file is None:
+        if renamed_file is not None:
             filename = renamed_file
 
         if desc:
@@ -42,12 +42,12 @@ class ImageNetDownloader:
             file_size_dl = 0
             block_sz = 8192
             while True:
-                buffer = u.read(block_sz)
-                if not buffer:
+                download_buffer = u.read(block_sz)
+                if not download_buffer:
                     break
 
-                file_size_dl += len(buffer)
-                f.write(buffer)
+                file_size_dl += len(download_buffer)
+                f.write(download_buffer)
 
                 status = "{0:16}".format(file_size_dl)
                 if file_size:
@@ -56,33 +56,50 @@ class ImageNetDownloader:
 
         return filename
 
-    def extractTarfile(self, filename):
-        tar = tarfile.open(filename)
-        tar.extractall()
-        tar.close()
+    def extract_tarfile(self, filename):
+        try:
+            tar = tarfile.open(filename)
+            tar.extractall()
+            tar.close()
+        except Exception, erro:
+                print 'Failed to extract : ', filename
 
-
-    def mkWnidDir(self, wnid, desc):
-    	tt = self.data_path + desc + '_' + wnid
+    def mk_wnid_dir(self, wnid, desc):
+        tt = self.data_path + desc + '_' + wnid
         if not os.path.exists(tt):
             os.mkdir(tt)
         return os.path.abspath(tt)
 
-    def downloadOriginalImages(self, wnid, username, accesskey, desc):
-        download_url = 'http://www.image-net.org/download/synset?wnid=%s&username=%s&accesskey=%s&release=latest&src=stanford' % (wnid, username, accesskey)
-        try:
-             download_file = self.download_file(download_url, self.mkWnidDir(wnid, desc), wnid + '_original_images.tar')
-        except Exception, erro:
-            print 'Fail to download : ' + download_url
-        currentDir = os.getcwd()
-        extracted_folder = self.mkWnidDir(wnid, desc)
-        if not os.path.exists(extracted_folder):
-            os.mkdir(extracted_folder)
-        extracted_folder = os.path.join(extracted_folder, wnid + '_original_images')
-        if not os.path.exists(extracted_folder):
-            os.mkdir(extracted_folder)
-        os.chdir(extracted_folder)
-        self.extractTarfile(download_file)
-        os.chdir(currentDir)
-        print 'Extract images to ' + extracted_folder
+    def check_if_downloaded(self, wnid, desc):
+        wnid_folder = self.data_path + desc + '_' + wnid
+        extracted_folder = os.path.join(wnid_folder, wnid + '_original_images')
+        if os.path.exists(extracted_folder):
+            if len([name for name in os.listdir(extracted_folder) if
+                    os.path.isfile(os.path.join(extracted_folder, name))]) > 0:
+                return True
+            else:
+                return False
+        else:
+            return False
 
+    def download_original_images(self, wnid, username, accesskey, desc):
+        already_there = self.check_if_downloaded(wnid, desc)
+        if already_there:
+            print desc, '(', wnid, ') already downloaded'
+        else:
+            download_url = 'http://www.image-net.org/download/synset?wnid=%s&username=%s&accesskey=%s&release=latest&src=stanford' % (wnid, username, accesskey)
+            try:
+                download_file = self.download_file(download_url, self.mk_wnid_dir(wnid, desc), wnid + '_original_images.tar')
+            except Exception, erro:
+                print 'Fail to download : ' + download_url
+            current_dir = os.getcwd()
+            extracted_folder = self.mk_wnid_dir(wnid, desc)
+            if not os.path.exists(extracted_folder):
+                os.mkdir(extracted_folder)
+            extracted_folder = os.path.join(extracted_folder, wnid + '_original_images')
+            if not os.path.exists(extracted_folder):
+                os.mkdir(extracted_folder)
+            os.chdir(extracted_folder)
+            self.extract_tarfile(download_file)
+            os.chdir(current_dir)
+            print 'Extract images to ' + extracted_folder

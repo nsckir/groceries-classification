@@ -1,3 +1,5 @@
+cv2
+dotenv
 click
 Sphinx
 coverage
