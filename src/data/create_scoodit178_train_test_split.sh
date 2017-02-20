@@ -1,3 +1,4 @@
+#!/bin/bash
 
 cd ../../data/raw/scoodit_178/
 mkdir -p train;
@@ -13,10 +14,7 @@ for i in ./*; do
 	echo "$c"
 	echo $count; 
 	echo $round_tr_samples; 
-#	find test -type d | while read f ; do
     for j in `ls "$i"/*.JPEG | shuf | head -n $round_tr_samples`; do
-#	for j in `find "$i" -name *.JPEG  | while read f; do ls "$f"; done | shuf | head -n $round_tr_samples`; do
-    	#echo "$j"
         mv "$j" train/"$c"/
     done
     mv "$i"/*.JPEG test/"$c"/
