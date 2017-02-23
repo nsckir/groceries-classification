@@ -1,3 +1,4 @@
+tensorflow
 cv2
 dotenv
 click
