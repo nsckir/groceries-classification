@@ -10,7 +10,7 @@
 # ./slim/scripts/finetune_inceptionv3_on_flowers.sh 32 1 4 4
 
 # Where the pre-trained InceptionV3 checkpoint is saved to.
-PRETRAINED_CHECKPOINT_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/downloaded_tf_models/inception_v3.ckpt
+PRETRAINED_CHECKPOINT_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/downloaded_tf_models/
 
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 # TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/inception_v3
