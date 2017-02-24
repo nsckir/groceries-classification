@@ -10,13 +10,21 @@
 # ./slim/scripts/finetune_inceptionv3_on_flowers.sh
 
 # Where the pre-trained InceptionV3 checkpoint is saved to.
-PRETRAINED_CHECKPOINT_DIR=/tmp/checkpoints
-
-# Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=/tmp/flowers-models/inception_v3
+PRETRAINED_CHECKPOINT_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/downloaded_tf_models
 
 # Where the dataset is saved to.
 DATASET_DIR=/tmp/flowers
+
+BATCH=$1
+CLONES=$2
+READERS=$3
+THREADS=$4
+DATASET=flowers
+model=inception_v3
+SUFFIX=bt_${BATCH}_cl_${CLONES}_r_${READERS}_thr_${THREADS}
+# Where the training (fine-tuned) checkpoint and logs will be saved to.
+
+TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/${SUFFIX}
 
 # Download the pre-trained checkpoint.
 if [ ! -d "$PRETRAINED_CHECKPOINT_DIR" ]; then
@@ -31,16 +39,16 @@ fi
 
 # Download the dataset
 python download_and_convert_data.py \
-  --dataset_name=flowers \
+  --dataset_name=${DATASET} \
   --dataset_dir=${DATASET_DIR}
 
 # Fine-tune only the new layers for 1000 steps.
 python train_image_classifier.py \
   --train_dir=${TRAIN_DIR} \
-  --dataset_name=flowers \
+  --dataset_name=${DATASET} \
   --dataset_split_name=train \
   --dataset_dir=${DATASET_DIR} \
-  --model_name=inception_v3 \
+  --model_name=${MODEL} \
   --checkpoint_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
   --checkpoint_exclude_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
   --trainable_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
@@ -58,18 +66,18 @@ python train_image_classifier.py \
 python eval_image_classifier.py \
   --checkpoint_path=${TRAIN_DIR} \
   --eval_dir=${TRAIN_DIR} \
-  --dataset_name=flowers \
+  --dataset_name=${DATASET} \
   --dataset_split_name=validation \
   --dataset_dir=${DATASET_DIR} \
-  --model_name=inception_v3
+  --model_name=${MODEL}
 
 # Fine-tune all the new layers for 500 steps.
 python train_image_classifier.py \
   --train_dir=${TRAIN_DIR}/all \
-  --dataset_name=flowers \
+  --dataset_name=${DATASET} \
   --dataset_split_name=train \
   --dataset_dir=${DATASET_DIR} \
-  --model_name=inception_v3 \
+  --model_name=${MODEL} \
   --checkpoint_path=${TRAIN_DIR} \
   --max_number_of_steps=500 \
   --batch_size=32 \
@@ -85,7 +93,7 @@ python train_image_classifier.py \
 python eval_image_classifier.py \
   --checkpoint_path=${TRAIN_DIR}/all \
   --eval_dir=${TRAIN_DIR}/all \
-  --dataset_name=flowers \
+  --dataset_name=${DATASET} \
   --dataset_split_name=validation \
   --dataset_dir=${DATASET_DIR} \
-  --model_name=inception_v3
+  --model_name=${MODEL}

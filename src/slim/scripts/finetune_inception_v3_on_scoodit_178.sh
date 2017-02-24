@@ -10,7 +10,7 @@
 # ./slim/scripts/finetune_inceptionv3_on_flowers.sh 32 1 4 4
 
 # Where the pre-trained InceptionV3 checkpoint is saved to.
-PRETRAINED_CHECKPOINT_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/downloaded_tf_models/
+PRETRAINED_CHECKPOINT_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/downloaded_tf_models
 
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 # TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/inception_v3
@@ -23,7 +23,7 @@ CLONES=$2
 READERS=$3
 THREADS=$4
 SUFFIX=bt_${BATCH}_cl_${CLONES}_r_${READERS}_thr_${THREADS}
-TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/inception_v3/${SUFFIX}/
+TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/inception_v3/${SUFFIX}
 
 # Download the pre-trained checkpoint.
 if [ ! -d "$PRETRAINED_CHECKPOINT_DIR" ]; then
@@ -51,7 +51,7 @@ python train_image_classifier.py \
   --learning_rate_decay_type=fixed \
   --save_interval_secs=60 \
   --save_summaries_secs=60 \
-  --log_every_n_steps=100 \
+  --log_every_n_steps=5 \
   --optimizer=rmsprop \
   --weight_decay=0.00004 \
   --batch_size=${BATCH} \
