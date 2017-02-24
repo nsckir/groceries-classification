@@ -20,7 +20,7 @@ CLONES=$2
 READERS=$3
 THREADS=$4
 DATASET=flowers
-model=inception_v3
+MODEL=inception_v3
 SUFFIX=bt_${BATCH}_cl_${CLONES}_r_${READERS}_thr_${THREADS}
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 
