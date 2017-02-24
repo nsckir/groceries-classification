@@ -53,14 +53,17 @@ python train_image_classifier.py \
   --checkpoint_exclude_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
   --trainable_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
   --max_number_of_steps=1000 \
-  --batch_size=32 \
   --learning_rate=0.01 \
   --learning_rate_decay_type=fixed \
   --save_interval_secs=60 \
   --save_summaries_secs=60 \
-  --log_every_n_steps=100 \
+  --log_every_n_steps=10 \
   --optimizer=rmsprop \
-  --weight_decay=0.00004
+  --weight_decay=0.00004 \
+  --batch_size=${BATCH} \
+  --num_clones=${CLONES} \
+  --num_readers=${READERS} \
+  --num_preprocessing_threads=${THREADS}
 
 # Run evaluation.
 python eval_image_classifier.py \
@@ -80,14 +83,17 @@ python train_image_classifier.py \
   --model_name=${MODEL} \
   --checkpoint_path=${TRAIN_DIR} \
   --max_number_of_steps=500 \
-  --batch_size=32 \
   --learning_rate=0.0001 \
   --learning_rate_decay_type=fixed \
   --save_interval_secs=60 \
   --save_summaries_secs=60 \
   --log_every_n_steps=10 \
   --optimizer=rmsprop \
-  --weight_decay=0.00004
+  --weight_decay=0.00004 \
+  --batch_size=${BATCH} \
+  --num_clones=${CLONES} \
+  --num_readers=${READERS} \
+  --num_preprocessing_threads=${THREADS}
 
 # Run evaluation.
 python eval_image_classifier.py \
