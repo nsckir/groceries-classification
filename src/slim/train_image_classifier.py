@@ -438,8 +438,8 @@ def main(_):
       provider = slim.dataset_data_provider.DatasetDataProvider(
           dataset,
           num_readers=FLAGS.num_readers,
-          common_queue_capacity=20 * FLAGS.batch_size,
-          common_queue_min=10 * FLAGS.batch_size)
+          common_queue_capacity=2000 * FLAGS.batch_size,
+          common_queue_min=1000 * FLAGS.batch_size)
       [image, label] = provider.get(['image', 'label'])
       label -= FLAGS.labels_offset
 
@@ -451,11 +451,11 @@ def main(_):
           [image, label],
           batch_size=FLAGS.batch_size,
           num_threads=FLAGS.num_preprocessing_threads,
-          capacity=5 * FLAGS.batch_size)
+          capacity=500 * FLAGS.batch_size)
       labels = slim.one_hot_encoding(
           labels, dataset.num_classes - FLAGS.labels_offset)
       batch_queue = slim.prefetch_queue.prefetch_queue(
-          [images, labels], capacity=2 * deploy_config.num_clones)
+          [images, labels], capacity=200 * deploy_config.num_clones)
 
     ####################
     # Define the model #
