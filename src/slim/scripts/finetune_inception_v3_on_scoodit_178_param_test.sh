@@ -19,9 +19,10 @@ CLONES=$2
 READERS=$3
 THREADS=$4
 STEPS1=$5
+LR=$6
 DATASET=scoodit_178
 MODEL=inception_v3
-SUFFIX=bt_${BATCH}_cl_${CLONES}_r_${READERS}_thr_${THREADS}
+SUFFIX=bt_${BATCH}_cl_${CLONES}_r_${READERS}_thr_${THREADS}_lr_${LR}
 
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/${SUFFIX}
@@ -48,7 +49,7 @@ python train_image_classifier.py \
   --checkpoint_exclude_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
   --trainable_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
   --max_number_of_steps=${STEPS1} \
-  --learning_rate=0.01 \
+  --learning_rate=${LR} \
   --learning_rate_decay_type=fixed \
   --save_interval_secs=30 \
   --save_summaries_secs=30 \
