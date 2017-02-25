@@ -19,6 +19,8 @@ BATCH=$1
 CLONES=$2
 READERS=$3
 THREADS=$4
+STEPS1=$5
+STEPS2=$6
 DATASET=flowers
 MODEL=inception_v3
 SUFFIX=bt_${BATCH}_cl_${CLONES}_r_${READERS}_thr_${THREADS}
@@ -52,7 +54,7 @@ python train_image_classifier.py \
   --checkpoint_path=${PRETRAINED_CHECKPOINT_DIR}/inception_v3.ckpt \
   --checkpoint_exclude_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
   --trainable_scopes=InceptionV3/Logits,InceptionV3/AuxLogits \
-  --max_number_of_steps=1000 \
+  --max_number_of_steps=${STEPS1} \
   --learning_rate=0.01 \
   --learning_rate_decay_type=fixed \
   --save_interval_secs=60 \
@@ -82,7 +84,7 @@ python train_image_classifier.py \
   --dataset_dir=${DATASET_DIR} \
   --model_name=${MODEL} \
   --checkpoint_path=${TRAIN_DIR} \
-  --max_number_of_steps=500 \
+  --max_number_of_steps=${STEPS2} \
   --learning_rate=0.0001 \
   --learning_rate_decay_type=fixed \
   --save_interval_secs=60 \
