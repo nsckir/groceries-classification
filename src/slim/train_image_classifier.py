@@ -469,11 +469,11 @@ def main(_):
             # Specify the loss function #
             #############################
             if 'AuxLogits' in end_points:
-                tf.losses.softmax_cross_entropy(
+                slim.losses.softmax_cross_entropy(
                     end_points['AuxLogits'], labels,
-                    label_smoothing=FLAGS.label_smoothing, weights=0.4, scope='aux_loss')
-            tf.losses.softmax_cross_entropy(
-                tf.squeeze(logits), labels, label_smoothing=FLAGS.label_smoothing, weights=1.0)
+                    label_smoothing=FLAGS.label_smoothing, weight=0.4, scope='aux_loss')
+            slim.losses.softmax_cross_entropy(
+                logits, labels, label_smoothing=FLAGS.label_smoothing, weight=1.0)
             return end_points
 
         # Gather initial summaries.
