@@ -6,7 +6,7 @@
 #
 # Usage:
 # cd slim
-# ./slim/scripts/finetune_inceptionv3_on_scoodit_178.sh 32 1 4 4 1000 500
+# ./slim/scripts/finetune_inceptionv3_on_scoodit_178_2.sh 32 1 4 4 1000 500
 INCEPTION_V3_LINK=http://download.tensorflow.org/models/inception_v4_2016_09_09.tar.gz
 INCEPTION_V4_LINK=http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz
 INCEPTION_RESNET_LINK=http://download.tensorflow.org/models/inception_resnet_v2_2016_08_30.tar.gz
@@ -21,6 +21,7 @@ BATCH=$1
 CLONES=$2
 READERS=$3
 THREADS=$4
+
 STEPS1=$5
 STEPS2=$6
 LR1=$7
