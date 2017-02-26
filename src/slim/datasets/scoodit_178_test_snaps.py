@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Provides data for the scoodit_178 dataset.
+"""Provides data for the scoodit_178_test_snaps dataset.
 
 The dataset scripts used to create the dataset can be found at:
 tensorflow/models/slim/datasets/download_and_convert_flowers.py
@@ -29,9 +29,9 @@ from datasets import dataset_utils
 
 slim = tf.contrib.slim
 
-_FILE_PATTERN = 'scoodit_178_%s_*.tfrecord'
+_FILE_PATTERN = 'scoodit_178_test_snaps_%s_*.tfrecord'
 
-SPLITS_TO_SIZES = {'train': 175266, 'validation': 9299}
+SPLITS_TO_SIZES = {'train': 0, 'validation': 3947}
 
 _NUM_CLASSES = 178
 

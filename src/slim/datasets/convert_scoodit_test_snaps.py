@@ -35,8 +35,7 @@ import tensorflow as tf
 
 import dataset_utils
 
-# The number of images in the validation set.
-# _NUM_VALIDATION = 9299
+
 
 # Seed for repeatability.
 _RANDOM_SEED = 0
@@ -46,7 +45,8 @@ _RANDOM_SEED = 0
 _NUM_SHARDS_TEST = 4
 
 test_dataset_dir = '/home/kiril/PycharmProjects/scoodit_image_classification/data/raw/scoodit_178/test_snaps'
-processed_data_dir = '/home/kiril/PycharmProjects/scoodit_image_classification/data/processed/scoodit_178_test_snaps/'
+processed_data_dir = '/home/kiril/PycharmProjects/scoodit_image_classification/data/processed/scoodit_178_test_snaps'
+
 
 class ImageReader(object):
     """Helper class that provides TensorFlow image coding utilities."""
@@ -79,8 +79,6 @@ def _get_filenames_and_classes(dataset_dir):
     A list of image file paths, relative to `dataset_dir` and the list of
     subdirectories, representing class names.
   """
-    # scoodit_178_train = '/home/kiril/PycharmProjects/scoodit_image_classification/data/raw/scoodit_178/train'
-    # scoodit_178_test = '/home/kiril/PycharmProjects/scoodit_image_classification/data/raw/scoodit_178/test'
     directories = []
     class_names = []
     for filename in os.listdir(dataset_dir):
@@ -100,7 +98,7 @@ def _get_filenames_and_classes(dataset_dir):
 
 def _get_dataset_filename(dataset_dir, split_name, shard_id, num_shards):
     # type: (object, object, object, object) -> object
-    output_filename = 'scoodit_178_%s_%05d-of-%05d.tfrecord' % (split_name, int(shard_id), int(num_shards))
+    output_filename = 'scoodit_178_test_snaps_%s_%05d-of-%05d.tfrecord' % (split_name, int(shard_id), int(num_shards))
     return os.path.join(dataset_dir, output_filename)
 
 
@@ -164,8 +162,7 @@ def _convert_dataset(split_name, filenames, class_names_to_ids, dataset_dir, num
 #    tf.gfile.DeleteRecursively(tmp_dir)
 
 
-def _dataset_exists(dataset_dir,):
-
+def _dataset_exists(dataset_dir, ):
     for shard_id in range(_NUM_SHARDS_TEST):
         output_filename = _get_dataset_filename(dataset_dir, 'validation', shard_id, _NUM_SHARDS_TEST)
         if not tf.gfile.Exists(output_filename):
@@ -173,13 +170,12 @@ def _dataset_exists(dataset_dir,):
     return True
 
 
-def run(processed_dir, train_dir, test_dir):
+def run(processed_dir, test_dir):
     """Runs the download and conversion operation.
 
   Args:
     dataset_dir: The dataset directory where the dataset is stored.
     :param test_dir:
-    :param train_dir:
     :param processed_dir:
   """
     if not tf.gfile.Exists(processed_dir):
@@ -210,4 +206,5 @@ def run(processed_dir, train_dir, test_dir):
     # _clean_up_temporary_files(dataset_dir)
     print('\nFinished converting the scoodit_178_test_snaps dataset!')
 
-run(processed_dir=processed_data_dir,  test_dir=test_dataset_dir)
+
+run(processed_dir=processed_data_dir, test_dir=test_dataset_dir)
