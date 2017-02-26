@@ -23,13 +23,15 @@ from datasets import flowers
 from datasets import imagenet
 from datasets import mnist
 from datasets import scoodit_178
+from datasets import scoodit_178_test_snaps
 
 datasets_map = {
     'cifar10': cifar10,
     'flowers': flowers,
     'imagenet': imagenet,
     'mnist': mnist,
-    'scoodit_178': scoodit_178
+    'scoodit_178': scoodit_178,
+    'scoodit_178_test_snaps': scoodit_178_test_snaps
 }
 
 
