@@ -220,7 +220,7 @@ def preprocess_for_train(image, height, width, bbox,
 
         # Randomly flip the image horizontally.
         distorted_image = tf.image.random_flip_left_right(distorted_image)
-        # Randomly flip the image horizontally.
+        # Randomly flip the image vertically.
         distorted_image = tf.image.random_flip_up_down(distorted_image)
         # Randomly distort the colors. There are 4 ways to do it.
         distorted_image = apply_with_random_selector(
