@@ -55,7 +55,8 @@ python train_image_classifier.py \
   --batch_size=${BATCH} \
   --num_clones=${CLONES} \
   --num_readers=${READERS} \
-  --num_preprocessing_threads=${THREADS}
+  --num_preprocessing_threads=${THREADS} \
+  --moving_average_decay=0.9999
 
 # Run evaluation.
 python eval_image_classifier.py \
@@ -64,4 +65,5 @@ python eval_image_classifier.py \
   --dataset_name=${DATASET} \
   --dataset_split_name=validation \
   --dataset_dir=${DATASET_DIR} \
-  --model_name=${MODEL}
+  --model_name=${MODEL} \
+  --moving_average_decay=0.9999
