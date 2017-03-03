@@ -9,7 +9,7 @@ Project Organization
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train` (not used yet)
     ├── README.md          <- The top-level README for developers using this project.
-    **├── data**
+    ├── data
     │   ├── external       <- Data from third party sources. (not used yet)
     │   ├── interim        <- Intermediate data that has been transformed. (not used yet)
     │   ├── processed      <- The final, canonical data sets for modeling which can be ingested by tensorflow.
