@@ -7,14 +7,14 @@ model trained on the 1000 classes of the ImageNet to 178 classes containing
 fruits, vegetables and other cooking ingredients. It also contains code for
 converting the images to TensorFlow's native TFRecord format.
 ## Table of contents
-
-<a href="#organization">Project Organization</a><br>
-<a href='#data'>Preparing the Datasets</a><br>
-<a href='#finetune'>Fine-tuning of Inception V3</a><br>
-<a href='#validate'>Evaluating performance</a><br>
+[Project Organization](#organization)   
+[Preparing the Datasets](#data)    
+[Fine-tuning of Inception V3](#finetune)    
+[Evaluating performance](#validate)     
+ 
 
 ## Project Organization
-<a id='organization'></a>
+<a name="organization"/>
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train` (not used yet)
@@ -73,7 +73,7 @@ converting the images to TensorFlow's native TFRecord format.
 
 --------
 ## Preparing the datasets
-<a id='data'></a>
+<a name="data"/>
 
 Two datasets have been used in this project: `scoodit_178` and `scoodit_178_test_snaps`. 
 
@@ -168,7 +168,7 @@ ${PROJECT_FOLDER}/data/processed/scoodit_178_test_snaps/labels.txt
 Now you are ready to train and evaluate the model.
 
 ## Train (fine tune) the Inception V3 Model on the scoodit_178 dataset
-<a id='finetune'></a>
+<a name="finetune"/>
 
 Download and extract the pretrained checkpoint of Inception V3 from [this link](http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz)
 and save it to `models/downloaded_tf_models/`
@@ -188,7 +188,7 @@ From there it can be deployed with Tensorflow Serving or AWS lambda. I have post
 the details and examples in the slack channel.
  
 ## Validate the model on the grocery snaps
-<a id='validate'></a>
+<a name="validate"/>
 
 Go to `src/slim/` and run:
 ```shell
