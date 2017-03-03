@@ -49,13 +49,13 @@ Project Organization
     │       │
     │       ├── eval_image_classifier.py  <- Evaluate a model on a dataset           
     │       ├── train_image_classifier.py <- Train a model on a dataset
-    │       ├── datasets   <- Scrips to convert the raw data to dataset which can be used with slim 
-                │
-                ├── convert_scoodit_178.py
-                ├── convert_scoodit_test_snaps.py
-                ├── dataset_factory.py
-                ├── scoodit_178.py
-                ├── scoodit_178_test_snaps.py
+    │       └── datasets   <- Scrips to convert the raw data to dataset which can be used with slim 
+    │            │
+    │            ├── convert_scoodit_178.py
+    │            ├── convert_scoodit_test_snaps.py
+    │            ├── dataset_factory.py
+    │            ├── scoodit_178.py
+    │            ├── scoodit_178_test_snaps.py
     └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
 
 
