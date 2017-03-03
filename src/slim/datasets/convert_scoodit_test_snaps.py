@@ -35,8 +35,6 @@ import tensorflow as tf
 
 import dataset_utils
 
-
-
 # Seed for repeatability.
 _RANDOM_SEED = 0
 

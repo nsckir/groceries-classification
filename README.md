@@ -60,5 +60,51 @@ Project Organization
 
 
 --------
+# Preparing the datasets
+<a id='Data'></a>
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+Two datasets have been used in in this project. The first one is called  "scoodit_178".
+It contains ~180K images  from ImageNet across 178 classes.
+The classes correspond to the ingredients listed in `Ingredients_lists_to_be_updated.xls` on google drive.
+The dataset can be downloaded from [s3://scoodit.image.classification.data/raw_data](https://console.aws.amazon.com/s3/buckets/scoodit.image.classification.data/raw_data?region=us-east-1)
+
+After downloading the archives in each subdirectory must be unpacked, so that the data has the following structure (NO BLANKS IN FOLDER NAMES):
+```shell
+  data/acorn_squash_n07717410/image.jpeg
+  data/acorn_squash_n07717410/another_image.jpeg
+  ...
+  data/almond_n07750586/image.jpeg
+  data/almond_n07750586/another_image.jpeg
+  ...
+  data/apple_n07739125/image.jpeg
+  data/apple_n07739125/another_image.jpeg
+  ...
+```
+Run `src/notebooks/01_nsckir_temp_extract_archives.ipynb` to unpack all the archives at once
+Run `src/data/create_scoodit178_train_test_split.sh` to put 95% of the images in the directory for training and the remaining 5% in the directory for validation.
+
+After that you should have following data structure (NO BLANKS IN FOLDER NAMES):
+```shell
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/143.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/51234.jpeg
+  ...
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/almond_n07750586/1467.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/almond_n07750586/8765.jpeg
+  ...
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/apple_n07739125/4356.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/apple_n07739125/543.jpeg
+  ...
+  
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/test/acorn_squash_n07717410/134.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/test/acorn_squash_n07717410/341.jpeg
+  ...
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/test/acorn_squash_n07717410/almond_n07750586/43245.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/test/acorn_squash_n07717410/almond_n07750586/3245.jpeg
+  ...
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/test/acorn_squash_n07717410/apple_n07739125/1456.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/test/acorn_squash_n07717410/apple_n07739125/654.jpeg
+  ...
+```
+
+Now you can run `src/slim/datasets/convert_scoodit_178.py` to convert the raw data to TFRecord format
+(You have to check the folder path. Might be that there are some absolute paths you have to adjust).
