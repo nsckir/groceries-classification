@@ -70,14 +70,14 @@ The dataset can be downloaded from [s3://scoodit.image.classification.data/raw_d
 
 After downloading the archives in each subdirectory must be unpacked, so that the data has the following structure (NO BLANKS IN FOLDER NAMES):
 ```shell
-  data/acorn_squash_n07717410/image.jpeg
-  data/acorn_squash_n07717410/another_image.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/acorn_squash_n07717410/image.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/acorn_squash_n07717410/another_image.jpeg
   ...
-  data/almond_n07750586/image.jpeg
-  data/almond_n07750586/another_image.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/almond_n07750586/image.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/almond_n07750586/another_image.jpeg
   ...
-  data/apple_n07739125/image.jpeg
-  data/apple_n07739125/another_image.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/apple_n07739125/image.jpeg
+  ${PROJECT_FOLDER}/data/raw/scoodit_178/apple_n07739125/another_image.jpeg
   ...
 ```
 Run `src/notebooks/01_nsckir_temp_extract_archives.ipynb` to unpack all the archives at once
@@ -107,4 +107,55 @@ After that you should have following data structure (NO BLANKS IN FOLDER NAMES):
 ```
 
 Now you can run `src/slim/datasets/convert_scoodit_178.py` to convert the raw data to TFRecord format
-(You have to check the folder path. Might be that there are some absolute paths you have to adjust).
+(You have to check the folder paths in the scripts. Might be that there are some absolute paths you have to adjust).
+
+When the script finishes you will find several TFRecord files created:
+```shell
+  ${PROJECT_FOLDER}/data/processed/scoodit_178/scoodit_178_train_00000-of-00172.tfrecord
+  ...
+  ${PROJECT_FOLDER}/data/processed/scoodit_178/scoodit_178_train_00171-of-00172.tfrecord
+  ...
+  ${PROJECT_FOLDER}/data/processed/scoodit_178/scoodit_178_validation_00000-of-00016.tfrecord
+  ...
+  ${PROJECT_FOLDER}/data/processed/scoodit_178/scoodit_178_validation_00015-of-00016.tfrecord
+  ${PROJECT_FOLDER}/data/processed/scoodit_178/labels.txt
+```
+
+Download and extract the pretrained checkpoint of Inception V3 from [this link](http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz)
+and save it to `${PROJECT_FOLDER}/models/downloaded_tf_models/`
+
+Now you are ready to train the model.
+
+Go to `${PROJECT_FOLDER}/src/slim/`
+
+Fine tune only the last layer of Inception V3
+
+```shell
+$ DATASET_DIR=${PROJECT_FOLDER}/data/processed/scoodit_178
+$ TRAIN_DIR=${PROJECT_FOLDER}/models/inception_v3/scoodit_178
+$ CHECKPOINT_PATH=${PROJECT_FOLDER}/models/downloaded_tf_models/inception_v3.ckpt
+$ python train_image_classifier.py \
+    --train_dir=${TRAIN_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=scoodit_178 \
+    --dataset_split_name=train \
+    --model_name=inception_v3 \
+    --checkpoint_path=${CHECKPOINT_PATH} \
+    --checkpoint_exclude_scopes=InceptionV3/Logits,InceptionV3/AuxLogits/Logits \
+    --trainable_scopes=InceptionV3/Logits,InceptionV3/AuxLogits/Logits
+```
+
+Evaluate the results
+
+```shell
+$ python eval_image_classifier.py \
+  --checkpoint_path=${TRAIN_DIR} \
+  --eval_dir=${TRAIN_DIR} \
+  --dataset_name=scoodit_178 \
+  --dataset_split_name=validation \
+  --dataset_dir=${DATASET_DIR} \
+  --model_name=inception_v3
+```
+
+The script `src/slim/scripts/finetune_inception_v3_on_scoodit_178_all_steps.sh` includes all steps and parameters
+which retrain the inception_v3 model on the scoodit_178 data set
