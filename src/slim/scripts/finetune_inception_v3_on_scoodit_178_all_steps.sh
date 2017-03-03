@@ -30,7 +30,7 @@ MODEL=inception_v3
 LR=${LR1}
 SUFFIX=lr_${LR}
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
-TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/second_run/${SUFFIX}
+TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/${SUFFIX}
 
 # Fine-tune only the new layers.
 python train_image_classifier.py \
@@ -68,7 +68,7 @@ LR=${LR2}
 SUFFIX=lr_${LR}
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 PRETRAINED_CHECKPOINT_DIR=${TRAIN_DIR}
-TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/second_run/${SUFFIX}
+TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/${SUFFIX}
 
 # Fine-tune all the new layers.
 python train_image_classifier.py \
@@ -105,7 +105,7 @@ LR=${LR3}
 SUFFIX=lr_${LR}
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 PRETRAINED_CHECKPOINT_DIR=${TRAIN_DIR}
-TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/second_run/${SUFFIX}
+TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/${SUFFIX}
 
 # Fine-tune all the new layers.
 python train_image_classifier.py \
@@ -142,7 +142,7 @@ LR=${LR4}
 SUFFIX=lr_${LR}
 # Where the training (fine-tuned) checkpoint and logs will be saved to.
 PRETRAINED_CHECKPOINT_DIR=${TRAIN_DIR}
-TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/second_run/${SUFFIX}
+TRAIN_DIR=${HOME}/PycharmProjects/scoodit_image_classification/models/${MODEL}/${DATASET}/${SUFFIX}
 
 # Fine-tune all the new layers.
 python train_image_classifier.py \
