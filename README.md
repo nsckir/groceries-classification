@@ -14,7 +14,7 @@ converting the images to TensorFlow's native TFRecord format.
  
 
 ## Project Organization
-<a name="organization" />
+<a name="#organization" />
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train` (not used yet)
