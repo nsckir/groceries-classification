@@ -223,3 +223,4 @@ curl --request POST --data-binary "@sample.jpg" http://52.39.72.148:5000
 ```
 
 Caution: this is a demo server. There is no authentication implemented. 
+Cloned and adapted from `https://github.com/hetaoaoao/tensorflow_web_deploy`
