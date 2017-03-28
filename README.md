@@ -11,6 +11,7 @@ converting the images to TensorFlow's native TFRecord format.
 [Preparing the Datasets](#data)    
 [Fine-tuning of Inception V3](#finetune)    
 [Evaluating performance](#validate)     
+[Run Demo Server](#serve)   
  
 
 ## Project Organization
@@ -202,3 +203,23 @@ python eval_image_classifier.py \
  ```
  
  `${MODEL_DIR}` is the folder where your fine tuned model is saved
+ 
+ ## Run Demo Server
+<a name="serve"/>
+
+Go to `src/slim/` and run:
+```shell
+./run_server.sh
+ ```
+ 
+The command starts a server "gunicorn" server where the trained model is served for inference. The server is accessible
+in the browser under `<aws_ec2_instance_ip_adress>:5001`. The API can also be queried directly e.g. 
+```shell
+curl --request POST --data-binary "@sample.jpg" http://52.39.72.148:5001
+```
+A slightly faster API is available in the repo `scoodit_server`
+```shell
+curl --request POST --data-binary "@sample.jpg" http://52.39.72.148:5000
+```
+
+Caution: this is a demo server. There is no authentication implemented. 
