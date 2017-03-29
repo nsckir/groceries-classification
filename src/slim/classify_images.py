@@ -129,6 +129,11 @@ def classify_upload():
     )
 
 
+@app.route('/loaderio-5ceeb2a7773a446099f3b617142b2c33/', methods=['GET'])
+def verify():
+    return 'loaderio-5ceeb2a7773a446099f3b617142b2c33'
+
+
 def embed_image_html(image):
     """Creates an image embedded in HTML base64 format."""
     image_pil = Image.fromarray((255 * image).astype('uint8'))
