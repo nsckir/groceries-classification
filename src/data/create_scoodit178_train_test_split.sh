@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Data: aws s3 sync s3://scoodit.image.classification.data/raw_data/  ${DATA_DIR}/ --exclude "*" --include "*.tar"
 
 # This script assumes the following structure  in ../../data/raw/scoodit_178/
 #  /label1/image0.jpeg

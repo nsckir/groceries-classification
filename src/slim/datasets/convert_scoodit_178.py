@@ -80,8 +80,7 @@ def _get_filenames_and_classes(dataset_dir):
     A list of image file paths, relative to `dataset_dir` and the list of
     subdirectories, representing class names.
   """
-    # scoodit_178_train = '/home/kiril/PycharmProjects/scoodit_image_classification/data/raw/scoodit_178/train'
-    # scoodit_178_test = '/home/kiril/PycharmProjects/scoodit_image_classification/data/raw/scoodit_178/test'
+
     directories = []
     class_names = []
     for filename in os.listdir(dataset_dir):

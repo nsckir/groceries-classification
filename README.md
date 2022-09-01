@@ -1,4 +1,4 @@
-# Scoodit Image Classification
+# Image Classification of Cooking Ingredients
 Classification of Cooking Ingredients Using Deep Learning
 
 This directory contains code for training and evaluating of Inception v3 model 
@@ -78,16 +78,12 @@ converting the images to TensorFlow's native TFRecord format.
 
 Two datasets have been used in this project: `scoodit_178` and `scoodit_178_test_snaps`. 
 
-
 `scoodit_178` contains ~180K images  from ImageNet across 178 classes.
-The classes correspond to the ingredients listed in `Ingredients_lists_to_be_updated.xls` on google drive.
 
 `scoodit_178_test_snaps` contains ~4K images of fruits, vegetables and
 other groceries acquired for the validation of the model.
 
-#### Download and convert `scoodit_178`
-
-The dataset can be downloaded from [s3://scoodit.image.classification.data/raw_data](https://console.aws.amazon.com/s3/buckets/scoodit.image.classification.data/raw_data?region=us-east-1)
+####  Dataset `scoodit_178`
 
 The archives in each subdirectory must be unpacked. You can use `src/notebooks/01_nsckir_temp_extract_archives.ipynb` 
 to unpack all the archives at once. After extraction the data must have the following structure (NO BLANKS IN FOLDER NAMES):
@@ -107,7 +103,7 @@ Run `src/data/create_scoodit178_train_test_split.sh` to put 95% of the
 images in the directory for training `data/raw/scoodit_178/train/ `
 and the remaining 5% in the directory for validation `data/raw/scoodit_178/test/`.
 
-After that you should have following data structure (NO BLANKS IN FOLDER NAMES):
+After that you should have the following data structure (NO BLANKS IN FOLDER NAMES):
 ```shell
   ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/143.jpeg
   ${PROJECT_FOLDER}/data/raw/scoodit_178/train/acorn_squash_n07717410/51234.jpeg
@@ -145,15 +141,10 @@ When the script finishes you will find several TFRecord files created:
   ${PROJECT_FOLDER}/data/processed/scoodit_178/labels.txt
 ```
 
-#### Download and convert `scoodit_178_test_snaps`
+#### Dataset  `scoodit_178_test_snaps`
 
-The original images are stored in [s3://grocerysnaps](https://console.aws.amazon.com/s3/buckets/grocerysnaps?region=us-east-1&tab=overview).
-However, the folder structure must be EXACTLY the same as in
+The folder structure must be EXACTLY the same as in
  `data/raw/scoodit_178/`.
-Therefore I have renamed the folders and uploaded the images as
- a [single archive](https://s3.amazonaws.com/scoodit.image.classification.data/test_snaps).
-
-Download the archive and extract in to `data/raw/test_snaps/`. 
 
 Go to `src/slim/data/` and run `convert_scoodit_test_snaps.py`. Again, check if all tha paths
 in the script are correct. 
@@ -184,9 +175,6 @@ using the parameter in the script. There might be potential to reduce this time 
 the learning rate and the number of steps. The final model achieves 92% top5 accuracy
 on the validation set. 
 
-I have saved the final model in [s3://scoodit.models/](https://console.aws.amazon.com/s3/buckets/scoodit.models?region=us-east-1&tab=overview)
-From there it can be deployed with Tensorflow Serving or AWS lambda. I have posted 
-the details and examples in the slack channel.
  
 ## Validate the model on the grocery snaps
 <a name="validate"/>
@@ -202,7 +190,7 @@ python eval_image_classifier.py \
   --model_name=inception_v3
  ```
  
- `${MODEL_DIR}` is the folder where your fine tuned model is saved
+ `${MODEL_DIR}` is the folder where your fine-tuned model is saved
  
  ## Run Demo Server
 <a name="serve"/>
@@ -215,11 +203,11 @@ Go to `src/slim/` and run:
 The command starts a server "gunicorn" server where the trained model is served for inference. The server is accessible
 in the browser under `<aws_ec2_instance_ip_adress>:5001`. The API can also be queried directly e.g. 
 ```shell
-curl --request POST --data-binary "@sample.jpg" http://52.39.72.148:5001
+curl --request POST --data-binary "@sample.jpg" <aws_ec2_instance_ip_adress>:5001
 ```
 A slightly faster API is available in the repo `scoodit_server`
 ```shell
-curl --request POST --data-binary "@sample.jpg" http://52.39.72.148:5000
+curl --request POST --data-binary "@sample.jpg" <aws_ec2_instance_ip_adress>:5000
 ```
 
 Caution: this is a demo server. There is no authentication implemented. 
